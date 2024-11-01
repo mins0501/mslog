@@ -1,0 +1,34 @@
+= kimzart API
+:doctype:   book
+:icons:     font
+:source-highlighter:    highlightjs
+:toc:       left
+:toclevels: 2
+:sectlinks:
+
+== 글 1건 조회
+
+=== 요청
+
+include::{snippets}/get/http-request.adoc[]
+
+include::{snippets}/get/path-parameters.adoc[]
+
+=== 응답
+
+include::{snippets}/get/http-response.adoc[]
+
+include::{snippets}/get/response-fields.adoc[]
+
+== 글 작성
+
+=== 요청
+
+include::{snippets}/write/http-request.adoc[]
+
+include::{snippets}/write/request-fields.adoc[]
+
+=== 응답
+
+include::{snippets}/write/http-response.adoc[]
+
