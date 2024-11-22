@@ -9,13 +9,19 @@ spring:
       path: /h2-console
 
   datasource:
-    url: jdbc:h2:mem:mslog
+    url: jdbc:h2:mem:mslog;NON_KEYWORDS=USER
     user: SA
     password:
     dirver-class-name: org.h2.Driver
+
+  jpa:
+    defer-datasource-initialization: true
 
   data:
     web:
       pageable:
         one-indexed-parameters: true
         default-page-size: 10
+
+mskym:
+  jwt-key: "G18PvEwX4D+LwWhT+RnrPV9D7Gw6M79fRL66Pyz8KRBC0ssrOyGfcntD/kmPRATNNJCvDuoj2l0q9RCdgU65kg=="

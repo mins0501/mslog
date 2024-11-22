@@ -5,29 +5,24 @@ import com.mslog.domain.Post;
 import com.mslog.repository.PostRepository;
 import com.mslog.request.PostCreate;
 import com.mslog.request.PostEdit;
-import com.mslog.service.PostService;
-import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.List;
-import java.util.regex.Matcher;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @AutoConfigureMockMvc
@@ -88,6 +83,7 @@ class PostControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "mins0501@gmail.com", roles = {"ADMIN"}, password = "1234")
     @DisplayName("글 작성")
     public void write() throws Exception {
         PostCreate postCreate = PostCreate.builder().title("제목입니다.").content("내용입니다.").build();
@@ -147,6 +143,7 @@ class PostControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "mins0501@gmail.com", roles = {"ADMIN"}, password = "1234")
     @DisplayName("글 수정")
     public void edit() throws Exception {
 
@@ -165,6 +162,7 @@ class PostControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "mins0501@gmail.com", roles = {"ADMIN"}, password = "1234")
     @DisplayName("글 삭제")
     public void delete() throws Exception {
 
@@ -206,6 +204,7 @@ class PostControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "mins0501@gmail.com", roles = {"ADMIN"}, password = "1234")
     @DisplayName("존재하지 않는 게시글 수정")
     public void error3() throws Exception {
         PostEdit postEdit = PostEdit.builder().title("far").content("boo").build();
@@ -218,21 +217,5 @@ class PostControllerTest {
                 .andDo(MockMvcResultHandlers.print());
     }
 
-    @Test
-    @DisplayName("글 작성 validation")
-    public void error4() throws Exception {
-
-        PostCreate postCreate = PostCreate.builder().title("<script>").content("bar").build();
-
-        String json = objectMapper.writeValueAsString(postCreate);
-
-        mockMvc.perform(MockMvcRequestBuilders.post("/post")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(json)
-                )
-                .andExpect(MockMvcResultMatchers.status().isBadRequest())
-                .andDo(MockMvcResultHandlers.print());
-
-    }
 
 }

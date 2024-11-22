@@ -2,7 +2,10 @@ package com.mslog.request;
 
 import com.mslog.exception.InvalidRequest;
 import jakarta.validation.constraints.NotBlank;
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 @Setter
 @Getter
@@ -19,14 +22,6 @@ public class PostCreate {
     public PostCreate(String title, String content) {
         this.title = title;
         this.content = content;
-    }
-
-    public void validate() {
-        if (title.contains("<script>")) {
-            throw new InvalidRequest("title", "<script>를 포함할 수 없습니다.");
-        } else if (content.contains("<script>")) {
-            throw new InvalidRequest("content", "<script>를 포함할 수 없습니다.");
-        } else {}
     }
 
 }

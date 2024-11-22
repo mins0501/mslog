@@ -1,8 +1,5 @@
 package com.mslog.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
 import lombok.Getter;
 
 @Getter

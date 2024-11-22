@@ -3,10 +3,12 @@ plugins {
     id 'org.springframework.boot' version '3.3.1'
     id 'io.spring.dependency-management' version '1.1.5'
     id "org.asciidoctor.jvm.convert" version "3.3.2"
+    id 'org.jetbrains.kotlin.jvm'
 }
 
 group = 'com.mslog'
 version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '21'
 
 java {
     toolchain {
@@ -34,21 +36,41 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
-    implementation 'com.querydsl:querydsl-core'
-    implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
+    implementation 'org.springframework.security:spring-security-crypto'
+    implementation 'org.springframework.session:spring-session-jdbc'
 
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.security:spring-security-test'
+
+    implementation 'org.bouncycastle:bcprov-jdk15on:1.70'
+
+    implementation 'com.querydsl:querydsl-core:5.0.0'
+    implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
     annotationProcessor "com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jakarta"
     annotationProcessor "jakarta.persistence:jakarta.persistence-api"
     annotationProcessor "jakarta.annotation:jakarta.annotation-api"
+
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
+    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 
     asciidoctorExt "org.springframework.restdocs:spring-restdocs-asciidoctor:${asciidocVersion}"
     testImplementation "org.springframework.restdocs:spring-restdocs-mockmvc:${asciidocVersion}"
 
     compileOnly 'org.projectlombok:lombok'
-    runtimeOnly 'com.h2database:h2'
     annotationProcessor 'org.projectlombok:lombok'
+
+    testCompileOnly "org.projectlombok:lombok"
+    testAnnotationProcessor "org.projectlombok:lombok"
+
+    runtimeOnly 'com.h2database:h2'
+
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
 }
 
 tasks.named('test') {
@@ -65,11 +87,21 @@ asciidoctor {
     dependsOn test
 }
 
+asciidoctor.doFirst {
+    delete file("src/main/resources/static/docs")
+}
+
 bootJar {
+    enabled = true
+
     dependsOn asciidoctor
 
     copy {
         from asciidoctor.outputDir
         into 'src/main/resources/static/docs'
     }
+}
+
+jar {
+    enabled = false
 }

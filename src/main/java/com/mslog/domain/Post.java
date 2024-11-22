@@ -1,7 +1,12 @@
 package com.mslog.domain;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
 
 @Getter
 @Entity
@@ -17,10 +22,19 @@ public class Post {
     @Lob
     private String content;
 
+    @ManyToOne
+    @JoinColumn
+    private Member member;
+
+    @Column(nullable = false)
+    private LocalDateTime regDate;
+
     @Builder
-    public Post(String title, String content) {
+    public Post(String title, String content, Member member) {
         this.title = title;
         this.content = content;
+        this.member = member;
+        this.regDate = LocalDateTime.now();
     }
 
     public PostEditor.PostEditorBuilder toEditor() {
@@ -33,4 +47,9 @@ public class Post {
         this.title = postEditor.getTitle();
         this.content = postEditor.getContent();
     }
+
+    public Long getMemberId() {
+        return this.member.getId();
+    }
+
 }
