@@ -10,7 +10,7 @@ export default class Post {
   public regDate = LocalDateTime.now()
 
   public getDisplayRegDate() {
-    return this.regDate.format(DateTimeFormatter.ofPattern('yyyy년 MM월 dd일 HH시'))
+    return this.regDate.format(DateTimeFormatter.ofPattern('yyyy-MM-dd HH:mm:ss'))
   }
 
   public getDisplaySimpleRegDate() {

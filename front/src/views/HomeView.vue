@@ -28,48 +28,99 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="content">
-    <span class="totalCount">게시글 수: {{ state.postList.totalCount }}</span>
+  <div class="contents-wrap">
+    <div class="contents">
 
-    <ul class="posts">
-      <li v-for="post in state.postList.items" :key="post.id">
-        <PostComponent :post="post" />
-      </li>
-    </ul>
+      <span class="total-count">게시글 수: {{ state.postList.totalCount }}</span>
 
-    <div style="width: 100%; display: flex; justify-content: center">
-      <el-pagination
-        :background="true"
-        layout="prev, pager, next"
-        v-model:current-page="state.postList.page"
-        :total="state.postList.totalCount"
-        :default-page-size="5"
-        @current-change="(page: number) => getList(page)"
-      />
+      <div class="posts">
+        <div class="post-header">
+          <el-row :gutter="20">
+            <el-col :span="4">
+              <div class="grid-content ep-bg-purple">
+                글 번호
+              </div>
+            </el-col>
+            <el-col :span="13">
+              <div class="grid-content ep-bg-purple">
+                글 제목
+              </div>
+            </el-col>
+            <el-col :span="7">
+              <div class="grid-content ep-bg-purple">
+                작성일자
+              </div>
+            </el-col>
+          </el-row>
+        </div>
+        <div class="part-line"></div>
+        <div v-for="post in state.postList.items" :key="post.id">
+          <PostComponent :post="post" />
+        </div>
+      </div>
+
+      <div class="post-page">
+        <el-pagination
+          :background="true"
+          layout="prev, pager, next"
+          v-model:current-page="state.postList.page"
+          :total="state.postList.totalCount"
+          :default-page-size="5"
+          @current-change="(page: number) => getList(page)"
+        />
+      </div>
+
     </div>
   </div>
 </template>
 
 <style scoped lang="scss">
-.content {
-  padding: 0 1rem 0 1rem;
-  margin-bottom: 2rem;
-}
+.contents-wrap {
+  margin: 0 auto;
+  overflow: hidden;
 
-.totalCount {
-  font-size: 0.88rem;
-}
+  .contents {
+    padding: 10px;
+    box-sizing: border-box;
+    position: relative;
+    height: 600px;
 
-.posts {
-  list-style: none;
-  padding: 0;
-
-  li {
-    margin-bottom: 2.4rem;
-
-    &:last-child {
-      margin-bottom: 0;
+    .total-count {
+      position: absolute;
+      top: 50px;
+      left: 10px;
     }
+
+    .posts {
+      width: 100%;
+      position: absolute;
+      top: 105px;
+      left: 20px;
+      padding: 10px;
+      box-sizing: border-box;
+
+      .post-header {
+        width: 100%;
+        font-weight: 700;
+      }
+
+      .part-line {
+        width: 100%;
+        margin: 20px 0;
+        border-bottom: 5px double #000;
+      }
+
+    }
+
+    .post-page {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+    }
+
   }
 }
+
 </style>

@@ -39,27 +39,31 @@ function goList() {
 </script>
 
 <template>
+  <div class="edit-wrap">
+    <el-form label-position="top">
 
-  <el-form label-position="top">
-    <el-form-item label="제목">
-      <el-input v-model="post.title" size="large" />
-    </el-form-item>
+      <el-form-item label="제목">
+        <el-input v-model="post.title" size="large" />
+      </el-form-item>
 
-    <el-form-item label="내용">
-      <el-input v-model="post.content" type="textarea" rows="15" />
-    </el-form-item>
+      <el-form-item label="내용">
+        <el-input v-model="post.content" type="textarea" rows="15" />
+      </el-form-item>
 
-    <div class="footer">
-      <div class="edit" @click="edit()">수정완료</div>
-      <div class="back" @click="goBack()">뒤로가기</div>
-      <div class="list" @click="goList()">목록보기</div>
-    </div>
+      <div class="footer">
+        <div class="edit" @click="edit()">수정완료</div>
+        <div class="back" @click="goBack()">뒤로가기</div>
+        <div class="list" @click="goList()">목록보기</div>
+      </div>
 
-  </el-form>
-
+    </el-form>
+  </div>
 </template>
 
 <style>
+.edit-wrap {
+  margin-top: 70px;
+}
 
 .footer {
   margin-top: 1rem;

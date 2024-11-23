@@ -33,25 +33,30 @@ function goBack() {
 </script>
 
 <template>
-  <el-form label-position="top">
-    <el-form-item label="제목">
-      <el-input v-model="state.postWrite.title" size="large" placeholder="제목을 입력해주세요" />
-    </el-form-item>
+  <div class="write-wrap">
+    <el-form label-position="top">
 
-    <el-form-item label="내용">
-      <el-input v-model="state.postWrite.content" type="textarea" rows="15" alt="내용" />
-    </el-form-item>
+      <el-form-item label="제목">
+        <el-input v-model="state.postWrite.title" size="large" placeholder="제목을 입력해주세요" />
+      </el-form-item>
 
+      <el-form-item label="내용">
+        <el-input v-model="state.postWrite.content" type="textarea" rows="15" alt="내용" />
+      </el-form-item>
 
-    <div class="footer">
-      <div class="write" @click="write()">등록완료</div>
-      <div class="back" @click="goBack()">뒤로가기</div>
-    </div>
+      <div class="footer">
+        <div class="write" @click="write()">등록완료</div>
+        <div class="back" @click="goBack()">뒤로가기</div>
+      </div>
 
-  </el-form>
+    </el-form>
+  </div>
 </template>
 
 <style>
+.write-wrap {
+  margin-top: 70px;
+}
 
 .footer {
   margin-top: 1rem;

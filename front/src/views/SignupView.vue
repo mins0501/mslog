@@ -33,32 +33,38 @@ function goBack() {
 </script>
 
 <template>
-  <el-row>
-    <el-col :span="10" :offset="7">
-      <el-form label-position="top">
+  <div class="signup-wrap">
+    <el-row>
+      <el-col :span="10" :offset="7">
+        <el-form label-position="top">
 
-        <el-form-item label="이름">
-          <el-input v-model="state.signup.name"></el-input>
-        </el-form-item>
+          <el-form-item label="이름">
+            <el-input v-model="state.signup.name"></el-input>
+          </el-form-item>
 
-        <el-form-item label="이메일">
-          <el-input v-model="state.signup.email"></el-input>
-        </el-form-item>
+          <el-form-item label="이메일">
+            <el-input v-model="state.signup.email"></el-input>
+          </el-form-item>
 
-        <el-form-item label="비밀번호">
-          <el-input type="password" v-model="state.signup.password"></el-input>
-        </el-form-item>
+          <el-form-item label="비밀번호">
+            <el-input type="password" v-model="state.signup.password"></el-input>
+          </el-form-item>
 
-        <el-form-item>
-          <el-button type="primary" style="width: 100%" @click="signup()">회원가입</el-button>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="warning" style="width: 100%" @click="goBack()">취소</el-button>
-        </el-form-item>
+          <el-form-item>
+            <el-button type="primary" style="width: 100%" @click="signup()">회원가입</el-button>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="warning" style="width: 100%" @click="goBack()">취소</el-button>
+          </el-form-item>
 
-      </el-form>
-    </el-col>
-  </el-row>
+        </el-form>
+      </el-col>
+    </el-row>
+  </div>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.signup-wrap {
+  margin-top: 70px;
+}
+</style>

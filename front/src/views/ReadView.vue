@@ -60,37 +60,42 @@ onMounted(() => {
 </script>
 
 <template>
-  <el-row>
-    <el-col :span="22" :offset="1">
-      <div class="title">{{ state.post.title }}</div>
-    </el-col>
-  </el-row>
+  <div class="read-wrap">
+    <el-row>
+      <el-col :span="22" :offset="1">
+        <div class="title">{{ state.post.title }}</div>
+      </el-col>
+    </el-row>
 
-  <el-row>
-    <el-col :span="10" :offset="7">
-      <div class="title">
-        <div class="regDate">Posted on {{ state.post.getDisplayRegDate() }}</div>
-      </div>
-    </el-col>
-  </el-row>
+    <el-row>
+      <el-col :span="10" :offset="7">
+        <div class="title">
+          <div class="regDate">Posted on {{ state.post.getDisplayRegDate() }}</div>
+        </div>
+      </el-col>
+    </el-row>
 
-  <el-row>
-    <el-col>
-      <div class="content">
-        {{ state.post.content }}
-      </div>
+    <el-row>
+      <el-col>
+        <div class="content">
+          {{ state.post.content }}
+        </div>
 
-      <div class="footer">
-        <div class="back" @click="goBack()">뒤로가기</div>
-        <div class="toEdit" @click="toEdit()">수정하기</div>
-        <div class="delete" @click="remove()">삭제하기</div>
-      </div>
-    </el-col>
-  </el-row>
-
+        <div class="footer">
+          <div class="back" @click="goBack()">뒤로가기</div>
+          <div class="toEdit" @click="toEdit()">수정하기</div>
+          <div class="delete" @click="remove()">삭제하기</div>
+        </div>
+      </el-col>
+    </el-row>
+  </div>
 </template>
 
 <style scoped lang="scss">
+.read-wrap {
+  margin-top: 70px;
+}
+
 .title {
   font-size: 1.8rem;
   font-weight: 400;
