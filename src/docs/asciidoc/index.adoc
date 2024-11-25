@@ -1,4 +1,4 @@
-= kimzart API
+= msKym Blog API
 :doctype:   book
 :icons:     font
 :source-highlighter:    highlightjs
@@ -6,7 +6,28 @@
 :toclevels: 2
 :sectlinks:
 
-== 글 1건 조회
+
+== 게시글 작성
+
+=== 요청
+
+include::{snippets}/write/http-request.adoc[]
+
+include::{snippets}/write/request-fields.adoc[]
+
+=== 응답
+
+include::{snippets}/write/http-response.adoc[]
+
+== 게시글 목록 조회
+
+=== 응답
+
+include::{snippets}/getList/http-response.adoc[]
+
+include::{snippets}/getList/response-fields.adoc[]
+
+== 게시글 1건 조회
 
 === 요청
 
@@ -20,15 +41,26 @@ include::{snippets}/get/http-response.adoc[]
 
 include::{snippets}/get/response-fields.adoc[]
 
-== 글 작성
+== 게시글 수정
 
 === 요청
 
-include::{snippets}/write/http-request.adoc[]
+include::{snippets}/edit/http-request.adoc[]
 
-include::{snippets}/write/request-fields.adoc[]
+include::{snippets}/edit/request-fields.adoc[]
 
 === 응답
 
-include::{snippets}/write/http-response.adoc[]
+include::{snippets}/edit/http-response.adoc[]
 
+== 게시글 삭제
+
+=== 요청
+
+include::{snippets}/delete/http-request.adoc[]
+
+include::{snippets}/delete/path-parameters.adoc[]
+
+=== 응답
+
+include::{snippets}/delete/http-response.adoc[]

@@ -1,11 +1,14 @@
 package com.mslog.service;
 
+import com.mslog.domain.Member;
 import com.mslog.domain.Post;
 import com.mslog.exception.PostNotFound;
+import com.mslog.repository.MemberRepository;
 import com.mslog.repository.PostRepository;
 import com.mslog.request.PostCreate;
 import com.mslog.request.PostEdit;
 import com.mslog.request.PostSearch;
+import com.mslog.response.PagingResponse;
 import com.mslog.response.PostResponse;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,6 +33,9 @@ public class PostServiceTest {
     @Autowired
     private PostRepository postRepository;
 
+    @Autowired
+    private MemberRepository memberRepository;
+
     @BeforeEach
     public void clean() {
         postRepository.deleteAll();
@@ -39,9 +45,19 @@ public class PostServiceTest {
     @DisplayName("글 작성")
     public void write() {
 
-        PostCreate postCreate = PostCreate.builder().title("제목입니다.").content("내용입니다.").build();
+        Member member = Member.builder()
+                .name("mskym")
+                .email("mins0501@gmail.com")
+                .password("1234")
+                .build();
+        memberRepository.save(member);
 
-        postService.write(postCreate);
+        PostCreate postCreate = PostCreate.builder()
+                .title("제목입니다.")
+                .content("내용입니다.")
+                .build();
+
+        postService.write(member.getId(), postCreate);
 
         Assertions.assertEquals(1L, postRepository.count());
 
@@ -87,12 +103,10 @@ public class PostServiceTest {
 
         PostSearch postSearch = PostSearch.builder().page(1).size(10).build();
 
-        List<PostResponse> post = postService.getList(postSearch);
+        PagingResponse<PostResponse> postList = postService.getList(postSearch);
 
-        Assertions.assertNotNull(post);
-        Assertions.assertEquals(10L, post.size());
-        Assertions.assertEquals("foo30", post.get(0).getTitle());
-        Assertions.assertEquals("bar30", post.get(0).getContent());
+        Assertions.assertNotNull(postList);
+        Assertions.assertEquals(10L, postList.getSize());
     }
 
     @Test

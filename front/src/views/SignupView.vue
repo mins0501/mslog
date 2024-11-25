@@ -34,6 +34,9 @@ function goBack() {
 
 <template>
   <div class="signup-wrap">
+    <div class="sub-wrap">
+      <div class="sub-title">회 원 가 입</div>
+    </div>
     <el-row>
       <el-col :span="10" :offset="7">
         <el-form label-position="top">
@@ -66,5 +69,17 @@ function goBack() {
 <style scoped lang="scss">
 .signup-wrap {
   margin-top: 70px;
+}
+
+.sub-wrap {
+  width: 100%;
+  margin: 30px auto;
+
+  .sub-title {
+    text-align: center;
+    font-weight: 700;
+    font-size: 30px;
+    color: #493D47FF;
+  }
 }
 </style>

@@ -32,6 +32,7 @@ public class PostService {
     public void write(Long memberId, PostCreate postCreate) {
         var member = memberRepository.findById(memberId).orElseThrow(() -> new MemberNotFound());
         Post post = Post.builder()
+                        .member(member)
                         .title(postCreate.getTitle())
                         .content(postCreate.getContent())
                         .build();
@@ -40,7 +41,6 @@ public class PostService {
 
     public PostResponse get(Long id) {
         Post post = postRepository.findById(id).orElseThrow(() -> new PostNotFound());
-
         return new PostResponse(post);
     }
 

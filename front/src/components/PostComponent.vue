@@ -19,14 +19,18 @@ const props = defineProps<{
       </el-col>
       <el-col :span="13">
         <div class="grid-content ep-bg-purple">
-          <router-link :to="{ name: 'post', params: { postId: props.post.id } }">
-            {{ props.post.title }}
-          </router-link>
+          <el-text class="w-150px mb-2" truncated>
+            <router-link :to="{ name: 'post', params: { postId: props.post.id } }">
+              {{ props.post.title }}
+            </router-link>
+          </el-text>
         </div>
       </el-col>
       <el-col :span="7">
         <div class="grid-content ep-bg-purple">
-          {{ props.post.getDisplayRegDate() }}
+          <el-text class="w-150px mb-2" truncated>
+            {{ props.post.getDisplayRegDate() }}
+          </el-text>
         </div>
       </el-col>
     </el-row>
@@ -53,12 +57,12 @@ const props = defineProps<{
   height: 30px;
 
   a {
-    display: inline-block;
-    min-width: 100px;
-    max-width: 340px;
-    min-height: 0;    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    //display: inline-block;
+    //min-width: 100px;
+    //max-width: 340px;
+    //min-height: 0;    overflow: hidden;
+    //text-overflow: ellipsis;
+    //white-space: nowrap;
   }
 }
 

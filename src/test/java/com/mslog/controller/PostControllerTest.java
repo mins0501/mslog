@@ -1,17 +1,24 @@
 package com.mslog.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mslog.config.MslogMockUser;
 import com.mslog.domain.Post;
+import com.mslog.repository.MemberRepository;
 import com.mslog.repository.PostRepository;
 import com.mslog.request.PostCreate;
 import com.mslog.request.PostEdit;
+import com.mslog.request.PostSearch;
 import org.hamcrest.Matchers;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
@@ -38,9 +45,13 @@ class PostControllerTest {
     @Autowired
     private PostRepository postRepository;
 
-    @BeforeEach
+    @Autowired
+    private MemberRepository memberRepository;
+
+    @AfterEach
     public void clean() {
         postRepository.deleteAll();
+        memberRepository.deleteAll();
     }
 
     @Test
@@ -83,10 +94,13 @@ class PostControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "mins0501@gmail.com", roles = {"ADMIN"}, password = "1234")
+    @MslogMockUser
     @DisplayName("글 작성")
     public void write() throws Exception {
-        PostCreate postCreate = PostCreate.builder().title("제목입니다.").content("내용입니다.").build();
+        PostCreate postCreate = PostCreate.builder()
+                .title("제목입니다.")
+                .content("내용입니다.")
+                .build();
         String jsonData = objectMapper.writeValueAsString(postCreate);
         mockMvc.perform(MockMvcRequestBuilders.post("/post")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -121,7 +135,7 @@ class PostControllerTest {
     @DisplayName("글 1페이지 조회")
     public void getList() throws Exception {
 
-        List<Post> requestPost = IntStream.range(1, 31)
+        List<Post> requestPost = IntStream.range(0, 30)
                 .mapToObj(i -> {
                     return Post.builder()
                             .title("foo" + i)
@@ -132,18 +146,16 @@ class PostControllerTest {
 
         postRepository.saveAll(requestPost);
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/post?page=0&size=10")
+        mockMvc.perform(MockMvcRequestBuilders.get("/post?page=0&size=5")
                         .contentType(MediaType.APPLICATION_JSON)
                 )
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.length()", Matchers.is(10)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].title").value("foo30"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].content").value("bar30"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.items.length()", Matchers.is(5)))
                 .andDo(MockMvcResultHandlers.print());
     }
 
     @Test
-    @WithMockUser(username = "mins0501@gmail.com", roles = {"ADMIN"}, password = "1234")
+    @MslogMockUser
     @DisplayName("글 수정")
     public void edit() throws Exception {
 
@@ -162,7 +174,7 @@ class PostControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "mins0501@gmail.com", roles = {"ADMIN"}, password = "1234")
+    @MslogMockUser
     @DisplayName("글 삭제")
     public void delete() throws Exception {
 

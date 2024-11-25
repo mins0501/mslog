@@ -34,11 +34,12 @@ function goBack() {
 
 <template>
   <div class="login-wrap">
+    <div class="sub-wrap">
+      <div class="sub-title">로 그 인</div>
+    </div>
     <el-row>
       <el-col :span="10" :offset="7">
         <el-form label-position="top">
-
-          <h2>로그인</h2>
 
           <el-form-item label="이메일">
             <el-input v-model="state.login.email"></el-input>
@@ -64,5 +65,17 @@ function goBack() {
 <style scoped lang="scss">
 .login-wrap {
   margin-top: 70px;
+}
+
+.sub-wrap {
+  width: 100%;
+  margin: 30px auto;
+
+  .sub-title {
+    text-align: center;
+    font-weight: 700;
+    font-size: 30px;
+    color: #493D47FF;
+  }
 }
 </style>

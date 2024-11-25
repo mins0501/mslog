@@ -11,5 +11,6 @@ export default class ProfileRepository {
 
   public clear() {
     localStorage.clear()
+    sessionStorage.clear()
   }
 }
