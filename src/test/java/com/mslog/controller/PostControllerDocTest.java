@@ -51,16 +51,16 @@ public class PostControllerDocTest {
     @Autowired
     private MemberRepository memberRepository;
 
-    @AfterEach
-    public void clean() {
-        postRepository.deleteAll();
-        memberRepository.deleteAll();
-    }
+//    @AfterEach
+//    public void clean() {
+//        postRepository.deleteAll();
+//        memberRepository.deleteAll();
+//    }
 
 
     @Test
     @MslogMockUser
-    @DisplayName("게시글 작성")
+    @DisplayName("글 작성")
     public void write() throws Exception {
 
         PostCreate postCreate = PostCreate.builder()
@@ -84,7 +84,7 @@ public class PostControllerDocTest {
     }
 
     @Test
-    @DisplayName("게시글 목록 조회")
+    @DisplayName("글 목록 조회")
     public void getList() throws Exception {
 
         List<Post> requestPost = IntStream.range(0, 30)
@@ -120,13 +120,13 @@ public class PostControllerDocTest {
     }
 
     @Test
-    @DisplayName("게시글 1건 조회")
+    @DisplayName("글 1건 조회")
     public void get() throws Exception {
 
         Post post = Post.builder().title("foo").content("bar").build();
         postRepository.save(post);
 
-        this.mockMvc.perform(RestDocumentationRequestBuilders.get("/post/{postId}", 1L)
+        this.mockMvc.perform(RestDocumentationRequestBuilders.get("/post/{postId}", post.getId())
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isOk())
